@@ -1,0 +1,1 @@
+export const CURRENT_KEY = 'header/CURRENT';
