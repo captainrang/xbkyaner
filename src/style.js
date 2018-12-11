@@ -46,6 +46,11 @@ export const GlobalStyle = createGlobalStyle `
     border-spacing: 0;
   }
   #root {
-    height: 100%;
+    .ant-form-item{
+      margin-bottom: 10px;
+    }
+    .ant-table-tbody > tr > td {
+      padding: 10px 16px;
+    }
   }
 `

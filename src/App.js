@@ -6,8 +6,8 @@ import store from './store';
 import * as component from './router';
 import 'antd/dist/antd.css';
 
-const loginPath = '/login';
-const mainPath = '/index'
+const universityQueryURL = '/uq';
+const adjustURL = '/adjust';
 
 class App extends Component {
   render() {
@@ -16,8 +16,9 @@ class App extends Component {
         <GlobalStyle />
         <BrowserRouter>
           <Switch>
-            <Route path={loginPath}  component={component.Login}/>
-            <Route path={mainPath}  component={component.Main}/>
+            <Route path={universityQueryURL}  component={component.UniversityQuery}/>
+            <Route path={adjustURL}  component={component.Adjust}/>
+            <Redirect path='/' to='/adjust'/>
           </Switch>
         </BrowserRouter>
       </Provider>

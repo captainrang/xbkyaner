@@ -6,6 +6,7 @@ export const HeaderWrapper = styled.div`
   height: 64px;
   border-bottom: 1px solid #ededed;
   box-shadow: 0 0px 10px 0px #ddd;
+  background: #fff;
 `
 export const Logo = styled.a`
   position: absolute;
@@ -19,12 +20,12 @@ export const Logo = styled.a`
   `
 export const SearchWrapper = styled.div`
   position: absolute;
-  left: 220px;
+  right: 220px;
   top: 15px;
 `
 export const MenuWrapper = styled.div`
   position: absolute;
-  right: 200px;
+  left: 200px;
 `
 export const ButtonWrapper = styled.div`
   position: absolute;
