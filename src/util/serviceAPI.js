@@ -1,3 +1,4 @@
+//省份接口
 export const province = {
   get:{
     method: 'get',
@@ -5,9 +6,18 @@ export const province = {
   }
 }
 
+// 调剂接口
 export const adjust = {
   get:{
     method: 'get',
     url: '/schInfo/tjxx',
+  }
+}
+
+// 登录接口
+export const login = {
+  oauth: {
+    method: 'post',
+    url:'/oauth/token',
   }
 }

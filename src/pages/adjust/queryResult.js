@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actionCreators } from './store';
+import { httpAjax, serviceURL } from '../../util/httpAjax';
+import { adjust } from '../../util/serviceAPI';
 import { Table } from 'antd';
 import moment from 'moment';
 
@@ -14,10 +17,16 @@ class QueryResult extends Component {
     title: '学校名称',
     dataIndex: 'yxmc',
     key: 'yxmc',
+    render: (text) =>{
+      return <span title={text}>{text.length>16?text.slice(0,15)+'...':text}</span>
+    }
   }, {
     title: '专业名称',
     dataIndex: 'zymc',
     key: 'zymc',
+    render: (text) =>{
+      return <span title={text}>{text.length>16?text.slice(0,15)+'...':text}</span>
+    }
   }, {
     title: '调剂信息标题',
     dataIndex: 'title',
@@ -29,16 +38,17 @@ class QueryResult extends Component {
     title: '发布时间',
     dataIndex: 'fbsj',
     key: 'fbsj',
-    render: (text, record, index) => {
+    render: (text) => {
       return <span>{moment(text).format('YYYY-MM-DD')}</span>;
     }
   }];
 
   render(){
-    const { loading, dataSource } = this.props;
+    const { loading, dataSource, current } = this.props;
     const pagination={
       showQuickJumper: true,
       pageSize:20,
+      current:current,
       total: dataSource.total,
       onChange: this.handleChange
     }
@@ -53,7 +63,8 @@ class QueryResult extends Component {
   }
 
   handleChange(page){
-
+    const { getByPage, params } = this.props;
+    getByPage(page, params);
   }
 }
 
@@ -63,8 +74,20 @@ const mapStateToProps = (state) => {
     loading: adjust.get('loading'),
     dataSource: adjust.get('adjustData'),
     total: adjust.get("total"),
-    params: adjust.get("params"),
+    current: adjust.get("current"),
+    params: adjust.get("queryParams"),
   }
 }
 
-export default connect(mapStateToProps)(QueryResult);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getByPage: function(page,params){
+      httpAjax(adjust.get.method, serviceURL+adjust.get.url,{params:{...params,p: page}}).then((res)=>{
+        const action = actionCreators.getAdjustData({data: res.data, loading: false, queryParams: params, current: page});
+        dispatch(action);
+      });
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QueryResult);

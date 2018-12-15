@@ -11,19 +11,26 @@ class ProvinceSelector extends Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      value: []
+    }
     this.handleChange = this.handleChange.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   componentDidMount(){
-    const { getProvince } = this.props;
+    const { getProvince, OnRef } = this.props;
     getProvince();
+    OnRef && OnRef(this);
   }
 
   render(){
-    const { provinceData, handleChange } = this.props;
+    const { provinceData } = this.props;
+    const { value } = this.state;
     return (
       <Select
         showSearch
+        value={value}
         placeholder="选择省份"
         optionFilterProp="children"
         onChange={this.handleChange}
@@ -42,7 +49,12 @@ class ProvinceSelector extends Component {
 
   handleChange(value){
     const { onChange } = this.props;
+    this.setState({value: value});
     onChange && onChange(value)
+  }
+
+  clear(){
+    this.setState({value: []});
   }
 }
 

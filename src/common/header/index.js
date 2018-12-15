@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Icon, Button, Input, Modal } from 'antd';
 import { HeaderWrapper, Logo, MenuWrapper, ButtonWrapper, SearchWrapper } from './style';
@@ -20,16 +21,25 @@ const Header = (props) => {
           mode="horizontal"
         >
           <Menu.Item key="home">
-            <Icon type="home" />首页
+            <NavLink to='/'>
+              <Icon type="home" />首页
+            </NavLink>
           </Menu.Item>
           <Menu.Item key="search">
-            <Icon type="file-search" />高校查询
+            <NavLink to='/uq'>
+              <Icon type="file-search" />高校查询
+            </NavLink>
           </Menu.Item>
           <Menu.Item key="app">
             <Icon type="exception" />学科评估（学硕）
           </Menu.Item>
           <Menu.Item key="alipay">
             <Icon type="exception" />专业评估（专硕）
+          </Menu.Item>
+          <Menu.Item key="adjust">
+            <NavLink to='/adjust'>
+              <Icon type="retweet" />调剂
+            </NavLink>
           </Menu.Item>
         </Menu>
       </MenuWrapper>

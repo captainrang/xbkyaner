@@ -14,8 +14,17 @@ export const Logo = styled.a`
   margin: 10px auto 40px auto;
   background: url(${logo});
 `
-export const RegisterWrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
-  margin-top: 30px;
-  text-align: right;
+  margin-top: 16px;
+`
+export const LoginType = styled.a`
+  display: block;
+  float: left;
+  text-align: left
+`
+export const Register = styled.a`
+  display: block;
+  float: right;
+  text-align: right
 `

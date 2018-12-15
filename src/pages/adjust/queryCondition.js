@@ -6,7 +6,7 @@ import ProviceSelector from '../../components/proviceSelector';
 import { adjustQueryItemLayout, adjustQueryRowLayout } from '../../util/responsivelayout';
 import { httpAjax, serviceURL } from '../../util/httpAjax';
 import { adjust } from '../../util/serviceAPI';
-import { colStyle } from './antd.style';
+import { colStyle, btnStyle } from './antd.style';
 
 const FormItem = Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -21,6 +21,7 @@ class queryCondition extends Component {
   constructor(props){
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   componentDidMount(){
@@ -57,7 +58,7 @@ class queryCondition extends Component {
                 {getFieldDecorator('sf', {
                   
                 })(
-                  <ProviceSelector />
+                  <ProviceSelector OnRef={(selector) => { this.selector = selector }}/>
                 )}
             </FormItem>
           </Col>
@@ -75,7 +76,8 @@ class queryCondition extends Component {
         </Row>
         <Row>
           <Col style={colStyle}>
-            <Button type='primary' onClick={this.handleClick}>查询</Button>
+            <Button type='primary' onClick={this.handleClick} style={btnStyle}>查询</Button>
+            <Button type='primary' ghost onClick={this.handleReset}>清空</Button>
           </Col>
         </Row>
       </Form>
@@ -86,14 +88,21 @@ class queryCondition extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
         if(!values.yx) delete values.yx;
         if(!values.zy) delete values.zy;
         if(!values.sf) delete values.sf;
-        if(!values.yxsx) {delete values.yxsx}else{};
+        if(!values.yxsx) {
+          delete values.yxsx
+        }else {
+          values.yxsx = values.yxsx.join(',')
+        };
         this.props.getAdjustData(values);
       }
     });
+  }
+  handleReset = () => {
+    this.props.form.resetFields();
+    this.selector.clear();
   }
 
 }
@@ -108,7 +117,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getAdjustData: function(params){
       httpAjax(adjust.get.method, serviceURL+adjust.get.url,{params}).then((res)=>{
-        const action = actionCreators.getAdjustData({data: res.data, loading: false});
+        const action = actionCreators.getAdjustData({data: res.data, loading: false, queryParams: params, current:1});
         dispatch(action);
       });
     },

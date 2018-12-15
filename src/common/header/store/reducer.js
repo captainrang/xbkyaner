@@ -3,7 +3,7 @@ import { fromJS } from 'immutable';
 
 // 把js对象转为immutable对象
 const defaultState = fromJS({
-  current: 'home',
+  current: 'adjust',
   loginVisible: false,
 });
 
